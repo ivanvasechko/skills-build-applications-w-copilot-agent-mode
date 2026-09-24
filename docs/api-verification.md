@@ -9,7 +9,7 @@ The Node.js API uses port `8000`. Its base URL is selected from the environment:
 - With `CODESPACE_NAME`: `https://$CODESPACE_NAME-8000.app.github.dev`
 - Without `CODESPACE_NAME`: `http://localhost:8000`
 
-The implementation is in `octofit-tracker/backend/src/config/apiUrl.ts`, and the Express server uses port `8000` by default in `octofit-tracker/backend/src/index.ts`.
+The implementation is in `octofit-tracker/backend/src/server.ts`, and `octofit-tracker/backend/src/index.ts` loads the server as the application entry point.
 
 ## Verification
 
@@ -35,8 +35,8 @@ The `/api/users` response contained 4 records, and `/api/activities` contained 5
 The localhost fallback was also evaluated with `CODESPACE_NAME` removed:
 
 ```console
-$ env -u CODESPACE_NAME node -e "import('./octofit-tracker/backend/dist/config/apiUrl.js').then(({apiUrl}) => console.log(apiUrl))"
-http://localhost:8000
+$ env -u CODESPACE_NAME npm --prefix octofit-tracker/backend start
+OctoFit Tracker API listening at http://localhost:8000
 ```
 
 In the active Codespace, the server resolved its public base URL in the expected form:
