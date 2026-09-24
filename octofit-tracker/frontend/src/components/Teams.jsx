@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react'
 import { fetchCollection } from '../api'
 
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+// Falls back to localhost when VITE_CODESPACE_NAME is unset, avoiding an https://undefined-8000... URL.
+const TEAMS_ENDPOINT = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
+
 function Teams() {
   const [teams, setTeams] = useState([])
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    fetchCollection('teams')
+    fetchCollection(TEAMS_ENDPOINT)
       .then(setTeams)
       .catch((err) => setError(err.message))
   }, [])
